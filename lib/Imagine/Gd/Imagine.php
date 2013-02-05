@@ -111,7 +111,14 @@ final class Imagine implements ImagineInterface
         }
 
         try {
+            $exifData = @exif_read_data($path);
+
+            if (FALSE === $exifData) {
+                $exifData = array();
+            }
+
             $image = $this->read($handle);
+            $image->setExifData($exifData);
         } catch (\Exception $e) {
             fclose($handle);
             throw $e;
