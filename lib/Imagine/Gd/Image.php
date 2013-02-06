@@ -188,13 +188,15 @@ final class Image implements ImageInterface
     public function autorotate(Color $background = null)
     {
         if (isset($this->exifData['Orientation'])) {
-            switch($this->exifData['Orientation']) {
+            $orientation = (int) $this->exifData['Orientation'];
+            
+            switch($orientation) {
                 case 8:
-                    return $this->rotate(90, $background);
+                    return $this->rotate(-90, $background);
                 case 3:
                     return $this->rotate(180, $background);
                 case 6:
-                    return $this->rotate(-90, $background);
+                    return $this->rotate(90, $background);
             }
         }
 
