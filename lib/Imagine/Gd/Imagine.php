@@ -119,6 +119,7 @@ final class Imagine implements ImagineInterface
 
             $image = $this->read($handle);
             $image->setExifData($exifData);
+            $image->autorotate();
         } catch (\Exception $e) {
             fclose($handle);
             throw $e;
