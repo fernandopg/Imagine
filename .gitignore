@@ -4,7 +4,7 @@ docs/_build
 Imagine-*.tgz
 imagine.phar
 # NetBeans specific #
-nbproject/private/
+nbproject/
 build/
 nbbuild/
 dist/
