@@ -111,15 +111,7 @@ final class Imagine implements ImagineInterface
         }
 
         try {
-            $exifData = @exif_read_data($path);
-
-            if (FALSE === $exifData) {
-                $exifData = array();
-            }
-
             $image = $this->read($handle);
-            $image->setExifData($exifData);
-            $image->autorotate();
         } catch (\Exception $e) {
             fclose($handle);
             throw $e;
@@ -139,7 +131,20 @@ final class Imagine implements ImagineInterface
             throw new InvalidArgumentException('An image could not be created from the given input');
         }
 
-        return $this->wrap($resource);
+        $image = $this->wrap($resource);
+        
+        $finfo = new \finfo(FILEINFO_MIME_TYPE);
+        $mimeType = $finfo->buffer($string);
+        
+        $exifData = @exif_read_data('data://'.$mimeType.';base64,' . base64_encode($string));
+
+        if (FALSE === $exifData) {
+            $exifData = array();
+        }
+        
+        $image->setExifData($exifData);
+        $image->autorotate();
+        return $image;
     }
 
     /**
