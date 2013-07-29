@@ -192,11 +192,17 @@ final class Image implements ImageInterface
             
             switch($orientation) {
                 case 8:
+                    $this->exifData['Orientation'] = 1;
                     return $this->rotate(-90, $background);
+                    break;
                 case 3:
+                    $this->exifData['Orientation'] = 1;
                     return $this->rotate(180, $background);
+                    break;
                 case 6:
+                    $this->exifData['Orientation'] = 1;
                     return $this->rotate(90, $background);
+                    break;
             }
         }
 
